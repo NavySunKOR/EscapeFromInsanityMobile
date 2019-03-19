@@ -14,9 +14,9 @@ public class ThirdPersonController : MonoBehaviour {
     private MobileInputManager inputManager;
     private ThirdPersonCamera thirdPersonCamera;
     private CharacterController cc;
-    [SerializeField]
+
+    private Vector3 originalUpperBodyEuler;
     private float vSpeed;
-    [SerializeField]
     private float hSpeed;
 
 	// Use this for initialization
@@ -24,6 +24,7 @@ public class ThirdPersonController : MonoBehaviour {
         inputManager = GetComponentInChildren<MobileInputManager>();
         thirdPersonCamera = GetComponent<ThirdPersonCamera>();
         cc = GetComponent<CharacterController>();
+        originalUpperBodyEuler = upperBodyTr.eulerAngles;
 
     }
 	
@@ -67,8 +68,8 @@ public class ThirdPersonController : MonoBehaviour {
         }
 
         if (inputManager.isAim)
-            upperBodyTr.rotation = Quaternion.Lerp(upperBodyTr.rotation, Quaternion.Euler(thirdPersonCamera.cameraTr.eulerAngles.x, thirdPersonCamera.cameraTr.eulerAngles.y, 0), thirdPersonCamera.rotationSpeed * Time.deltaTime);
+            upperBodyTr.rotation = Quaternion.Lerp(upperBodyTr.rotation, Quaternion.Euler(thirdPersonCamera.cameraTr.eulerAngles.x, thirdPersonCamera.cameraTr.eulerAngles.y, upperBodyTr.eulerAngles.z), thirdPersonCamera.rotationSpeed * Time.deltaTime);
         else
-            upperBodyTr.rotation = Quaternion.Lerp(upperBodyTr.rotation, Quaternion.Euler(0, transform.eulerAngles.y, 0), thirdPersonCamera.rotationSpeed * Time.deltaTime);
+            upperBodyTr.rotation = Quaternion.Lerp(upperBodyTr.rotation, Quaternion.Euler(originalUpperBodyEuler.x, transform.eulerAngles.y, originalUpperBodyEuler.z), thirdPersonCamera.rotationSpeed * Time.deltaTime);
     }
 }
