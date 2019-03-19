@@ -44,8 +44,8 @@ public class ThirdPersonCamera : MonoBehaviour {
 
     void SetCameraPos()
     {
-        float horizontal = inputManager.viewHorizontal * invertedVal * Time.deltaTime;
-        float vertical = -inputManager.viewVertical * invertedVal * Time.deltaTime;
+        float horizontal = inputManager.viewHorizontal * invertedVal;
+        float vertical = -inputManager.viewVertical * invertedVal;
 
         pitch += vertical * rotationSpeed;
         yaw += horizontal * rotationSpeed;

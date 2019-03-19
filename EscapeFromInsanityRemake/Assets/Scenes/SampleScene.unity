@@ -1093,7 +1093,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTr: {fileID: 534669905}
   armTr: {fileID: 1585435058}
-  rotationSpeed: 50
+  rotationSpeed: 3
   cameraLerpSpeed: 3
   isInverted: 0
   cameraOffset: {x: 0.5, y: 1, z: -5}
