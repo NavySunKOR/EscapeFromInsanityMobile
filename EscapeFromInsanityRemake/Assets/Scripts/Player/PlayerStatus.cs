@@ -23,6 +23,8 @@ public class PlayerStatus{
         }
     }
 
+    private int health;
+
     public bool HGWield
     {
         get
@@ -105,5 +107,25 @@ public class PlayerStatus{
     private float horizontal = 0f;
     private float vertical = 0f;
 
-    private int health;
+    //interact
+    public float DetectRadius
+    {
+        get
+        {
+           return detectRadius;
+        }
+    }
+
+    private float detectRadius = 5f;
+
+    public LayerMask detectLayer;
+
+    //UI
+    public bool isPaused;
+
+
+    //Inventory and weapon
+
+    public int selectedWeapon;
+
 }
