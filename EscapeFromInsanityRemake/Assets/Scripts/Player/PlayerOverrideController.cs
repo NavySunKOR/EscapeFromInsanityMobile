@@ -8,12 +8,17 @@ public class PlayerOverrideController : MonoBehaviour {
     private PlayerAnimatorController animatorController;
     private MobileInputManager inputManager;
     private ThirdPersonController thirdPersonController;
+    private PlayerUIController playerUIController;
+    private PlayerInventory playerInventory;
 
     private void Start()
     {
         animatorController = GetComponent<PlayerAnimatorController>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         inputManager = GetComponentInChildren<MobileInputManager>();
+        playerUIController = GetComponent<PlayerUIController>();
+        playerInventory = GetComponent<PlayerInventory>();
+        
 
         //TODO: Check this when save/load function implementing.
         SetDefaultReference(); 
@@ -57,5 +62,14 @@ public class PlayerOverrideController : MonoBehaviour {
         //TODO: Tell weapon to reload
         if(playerStatus.Vertical <= playerStatus.MAX_RUN_VERTICAL)
             animatorController.ReloadWeapon();
+    }
+
+    public void PauseMenu()
+    {
+        playerUIController.OpenClosePauseMenu();
+    }
+
+    public void InventoryMenu()
+    {
     }
 }

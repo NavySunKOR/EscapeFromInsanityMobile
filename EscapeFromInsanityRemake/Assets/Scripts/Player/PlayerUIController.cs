@@ -21,9 +21,9 @@ public class PlayerUIController : MonoBehaviour {
 
     private void Start()
     {
-        OnOFFCrossHair();
+        //OnOFFCrossHair();
         status = GetComponent<PlayerOverrideController>().playerStatus;
-        crossHair.SetActive(true);
+        //crossHair.SetActive(true);
     }
 
     private void Update()
