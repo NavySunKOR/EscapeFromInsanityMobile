@@ -18,129 +18,13 @@ public class PlayerInventory : MonoBehaviour {
 
     }
 
-    public bool PickupItem(Transform tr)
-    {
-        //check item
-        Pickable pck = tr.GetComponent<Pickable>();
-        switch (pck.item.type)
-        {
-            case ItemType.Gun:return PickupOne(pck);
-            case ItemType.Ammo: return PickupAmount(pck);
-            case ItemType.Key: return PickupOne(pck);
-            case ItemType.Health: return PickupAmount(pck);
-            default: return false; 
-
-        }
-
-    }
-
-    private bool PickupOne(Pickable pck)
-    {
-        for(int i = 0; i < inventory.Length; i++)
-        {
-            if(inventory[i].type == ItemType.None)
-            {
-                AddInventoryItem(pck, i);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private bool PickupAmount(Pickable pck)
-    {
-        int fillable = 0;
-        for (int i = 0; i < inventory.Length; i++)
-        {
-            if (inventory[i].type == ItemType.None)
-            {
-                AddInventoryItem(pck, i);
-                return true;
-            }
-            else
-            {
-                if(inventory[i].name == pck.item.name)
-                {
-                    if(inventory[i].amount + pck.item.amount > inventory[i].maxAmount)
-                    {
-                        fillable = inventory[i].maxAmount - inventory[i].amount;
-                        inventory[i].amount += fillable;
-                        pck.item.amount -= fillable;
-                    }
-                    else
-                    {
-                        inventory[i].amount += pck.item.amount;
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    private void AddInventoryItem(Pickable pck,int idx)
-    {
-        switch (pck.item.type)
-        {
-            case ItemType.Gun: AddWeapon(pck, idx); break;
-            case ItemType.Ammo: AddAmmo(pck, idx); break;
-            case ItemType.Health: AddHealth(pck, idx); break;
-            case ItemType.Key: AddKey(pck, idx);break;
-            default: break;
-        }
-        
-    }
-
-    private void AddWeapon(Pickable pck,int idx)
-    {
-        inventory[idx] = new Weapon();
-        inventory[idx].amount = pck.item.amount;
-        inventory[idx].maxAmount = pck.item.maxAmount;
-        inventory[idx].type = pck.item.type;
-
-        switch(pck.item.name)
-        {
-            case ItemName.Handgun: weapons[1].GetComponent<WeaponController>().isHaving = true; break;
-            case ItemName.Shotgun: weapons[2].GetComponent<WeaponController>().isHaving = true; break;
-            case ItemName.AssaultRifle: weapons[3].GetComponent<WeaponController>().isHaving = true; break;
-            default: break;
-
-        }
-    }
-
-    private void AddAmmo(Pickable pck, int idx)
-    {
-        inventory[idx] = new Ammo();
-        inventory[idx].amount = pck.item.amount;
-        inventory[idx].maxAmount = pck.item.maxAmount;
-        inventory[idx].type = pck.item.type;
-        inventory[idx].name = pck.item.name;
-    }
-
-    private void AddHealth(Pickable pck, int idx)
-    {
-        inventory[idx] = new Health();
-        inventory[idx].amount = pck.item.amount;
-        inventory[idx].maxAmount = pck.item.maxAmount;
-        inventory[idx].type = pck.item.type;
-        inventory[idx].name = pck.item.name;
-    }
-
-    private void AddKey(Pickable pck, int idx)
-    {
-        inventory[idx] = new Key();
-        inventory[idx].amount = pck.item.amount;
-        inventory[idx].maxAmount = pck.item.maxAmount;
-        inventory[idx].type = pck.item.type;
-        inventory[idx].name = pck.item.name;
-    }
-
     //Global
     public bool ReloadWeapon(int amount,out int available)
     {
         Weapon weapon = weapons[status.selectedWeapon].GetComponent<WeaponController>().weaponInfo;
         return ReloadWeaponWithType(weapon.name, amount, out available);
     }
+    
 
     private bool ReloadWeaponWithType(ItemName itemName, int amount,out int reloadable)
     {
@@ -150,7 +34,7 @@ public class PlayerInventory : MonoBehaviour {
         {
             case ItemName.Handgun: ammo = GetItem(ItemName.HandgunAmmo, out idx); break;
             case ItemName.Shotgun: ammo = GetItem(ItemName.ShotgunAmmo, out idx); break;
-            case ItemName.AssaultRifle: ammo = GetItem(ItemName.AssaultRifle, out idx); break;
+            case ItemName.AssaultRifle: ammo = GetItem(ItemName.AssaultRifleAmmo, out idx); break;
             default: ammo = new Item(); ammo.type = ItemType.None; ammo.name = ItemName.None; break;
         }
         
@@ -205,34 +89,11 @@ public class PlayerInventory : MonoBehaviour {
         return false;
     }
 
-    private Item GetItem(ItemName lookable,out int refer)
-    {
-        Item returns = new Item();
-        refer = 0;
-        for (int i = 0; i < inventory.Length; i++)
-        {
-            //TODO : Check less amount of ammo.
-            if(inventory[i].name == lookable)
-            {
-                if(returns.type == ItemType.None)
-                {
-                    returns = inventory[i];
-                    refer = i;
-                }
-                else if(inventory[i].amount <= returns.amount)
-                {
-                    //allocate new
-                    returns = inventory[i];
-                    refer = i;
-                }
-            }
-        }
-        return returns;
-    }
+    
 
     //TODO: Redefine Weapon Equip
         
-    private void EquipWeapon(int index)
+    public void EquipWeapon(int index)
     {
         int selected = 0;
         WeaponController weaponController = weapons[index].GetComponent<WeaponController>();
@@ -249,6 +110,165 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     //Items
+
+    public bool AddItem(Item item) // this bool determines destroy.
+    {
+
+        switch(item.type)
+        {
+            case ItemType.Ammo: return AddAmmo(item);
+            case ItemType.Gun: return AddGun(item); 
+            case ItemType.Health: return AddHealth(item); 
+            case ItemType.Key: return AddKey(item);
+            default: return false;
+        }
+
+    }
+
+    private bool AddAmmo(Item item)
+    {
+        int index;
+        int emptySpace = GetEmptySpace();
+        Item exist = GetItem(item.name, out index);
+        //exceeded max.
+        if(exist.type != ItemType.None)
+        {
+            if (exist.amount + item.amount > exist.maxAmount)
+            {
+                int addTo = exist.maxAmount - exist.amount;
+                exist.amount += addTo;
+                item.amount -= addTo;
+                if (emptySpace != inventory.Length)
+                {
+                    inventory[emptySpace] = item;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                exist.amount += item.amount;
+                return true;
+            }
+        }
+        else if(emptySpace != inventory.Length)
+        {
+            inventory[emptySpace] = item;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+
+    private bool AddHealth(Item item)
+    {
+        int index;
+        int emptySpace = GetEmptySpace();
+        Item exist = GetItem(item.name, out index);
+        //exceeded max.
+        if (exist.type != ItemType.None)
+        {
+            if (exist.amount + item.amount > exist.maxAmount)
+            {
+                int addTo = exist.maxAmount - exist.amount;
+                exist.amount += addTo;
+                item.amount -= addTo;
+                if (emptySpace != inventory.Length)
+                {
+                    inventory[emptySpace] = item;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                exist.amount += item.amount;
+                return true;
+            }
+        }
+        else if (emptySpace != inventory.Length)
+        {
+            inventory[emptySpace] = item;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool AddGun(Item item)
+    {
+        int emptySpace = GetEmptySpace();
+        if (emptySpace != inventory.Length)
+        {
+            inventory[emptySpace] = item;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool AddKey(Item item)
+    {
+        int emptySpace = GetEmptySpace();
+        if (emptySpace != inventory.Length)
+        {
+            inventory[emptySpace] = item;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private int GetEmptySpace()
+    {
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (inventory[i].type == ItemType.None)
+                return i;
+        }
+
+        return inventory.Length;
+    }
+
+    private Item GetItem(ItemName lookable, out int refer)
+    {
+        Item returns = new Item();
+        refer = 0;
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            //TODO : Check less amount of ammo.
+            if (inventory[i].name == lookable)
+            {
+                if (returns.type == ItemType.None)
+                {
+                    returns = inventory[i];
+                    refer = i;
+                }
+                else if (inventory[i].amount <= returns.amount)
+                {
+                    //allocate new
+                    returns = inventory[i];
+                    refer = i;
+                }
+            }
+        }
+        return returns;
+    }
 
     public void DiscardItem(int index)
     {

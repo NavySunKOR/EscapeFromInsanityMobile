@@ -12,18 +12,6 @@ public class PlayerInteractor : MonoBehaviour {
         status = GetComponent<PlayerOverrideController>().playerStatus;
     }
 
-    private void FixedUpdate()
-    {
-        DetectItem();
-    }
-
-    private void DetectItem()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, status.DetectRadius, status.detectLayer);
-        foreach(Collider coll in colliders)
-        {
-            //active item buttons.
-        }
-    }
+    //TODO : Delete This code.
 
 }

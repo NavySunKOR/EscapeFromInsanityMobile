@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerStatus{
     
     public readonly float MAX_RUN_VERTICAL = 0.6f;
+    public readonly int MAX_INVENTORY_COUNT = 12;
 
     //status properties.
     public int maxHealth;

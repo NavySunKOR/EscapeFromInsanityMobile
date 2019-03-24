@@ -47,7 +47,6 @@ public class PlayerOverrideController : MonoBehaviour {
     {
         playerStatus.maxHealth = 100;
         playerStatus.Health = playerStatus.maxHealth;
-        playerStatus.HGWield = true; // TODO: Change this magic value later.
     }
 
     public void Shoot()
@@ -71,5 +70,14 @@ public class PlayerOverrideController : MonoBehaviour {
 
     public void InventoryMenu()
     {
+        playerUIController.OpenCloseInventory();
+    }
+
+    public void AddItem(Pickable item)
+    {
+        if(playerInventory.AddItem(item.info))
+        {
+            item.PickupItem();
+        }
     }
 }
