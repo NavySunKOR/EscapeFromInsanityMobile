@@ -80,4 +80,9 @@ public class PlayerOverrideController : MonoBehaviour {
             item.PickupItem();
         }
     }
+
+    public void UseItem(int index)
+    {
+        playerInventory.
+    }
 }

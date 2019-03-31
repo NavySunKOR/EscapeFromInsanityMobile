@@ -81,7 +81,7 @@ public class PlayerUIController : MonoBehaviour {
                 switch (inventory.inventory[i].type)
                 {
                     case ItemType.Gun:
-                        buttonInfo.SetAmountText(inventory.weapons[(int)inventory.inventory[i].name].GetComponent<WeaponController>().weaponInfo.currentMagazine);
+                        buttonInfo.SetAmountText(inventory.weapons[(int)inventory.inventory[i].name - 1].GetComponent<WeaponController>().weaponInfo.currentMagazine);
                         break;
                     case ItemType.Ammo:
                     case ItemType.Health:

@@ -51,7 +51,6 @@ public class WeaponController : MonoBehaviour {
             }
             else
             {
-                //TODO: Make a bullet hole
             }
         }
         
@@ -77,7 +76,6 @@ public class WeaponController : MonoBehaviour {
                 }
                 else
                 {
-                    //TODO: Make a bullet hole
                 }
             }
         }

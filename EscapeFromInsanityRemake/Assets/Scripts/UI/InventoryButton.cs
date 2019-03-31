@@ -8,6 +8,12 @@ public class InventoryButton : MonoBehaviour, IPointerDownHandler
 {
     public int index;
     public Text amount;
+    private PlayerOverrideController overrideController;
+
+    private void Start()
+    {
+        overrideController = GetComponent<PlayerOverrideController>();
+    }
 
     public void SetAmountText(int value)
     {
@@ -16,5 +22,6 @@ public class InventoryButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        overrideController.UseItem(index);
     }
 }

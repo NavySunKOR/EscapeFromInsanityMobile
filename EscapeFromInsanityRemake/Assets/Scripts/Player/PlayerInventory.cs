@@ -276,7 +276,7 @@ public class PlayerInventory : MonoBehaviour {
         inventory[index].name = ItemName.None;
     }
         
-    private void UseItem(int index,int amount)
+    public void UseItem(int index,int amount)
     {
         inventory[index].Use(amount);
     }

@@ -7,7 +7,6 @@ public class Weapon : Item {
 
     //effects 
     public GameObject muzzleFlash;
-    public GameObject bulletHole;
 
     //status
     public int damage;

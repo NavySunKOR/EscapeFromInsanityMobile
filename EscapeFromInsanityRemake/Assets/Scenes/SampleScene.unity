@@ -789,6 +789,7 @@ GameObject:
   - component: {fileID: 291845411}
   - component: {fileID: 291845413}
   - component: {fileID: 291845412}
+  - component: {fileID: 291845414}
   m_Layer: 0
   m_Name: Weapon_Pistol
   m_TagString: Untagged
@@ -854,6 +855,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 291845410}
   m_Mesh: {fileID: 4300006, guid: 344a3d604644509489c062f11bbe78a5, type: 3}
+--- !u!114 &291845414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 291845410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609c380b3c87517458faf0f89f884d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponInfo:
+    amount: 1
+    maxAmount: 1
+    type: 3
+    name: 1
+    muzzleFlash: {fileID: 0}
+    bulletHole: {fileID: 0}
+    damage: 20
+    rpm: 100
+    range: 100
+    maximumMagazine: 15
+    currentMagazine: 15
+    maxRecoilRadius: 1
+    recoilIncreament: 0.2
+  fireReady: 0
+  isHaving: 0
 --- !u!1001 &311338309
 Prefab:
   m_ObjectHideFlags: 0
@@ -1931,6 +1959,7 @@ GameObject:
   - component: {fileID: 680107160}
   - component: {fileID: 680107159}
   - component: {fileID: 680107158}
+  - component: {fileID: 680107161}
   m_Layer: 0
   m_Name: Weapon_AssultRifle02
   m_TagString: Untagged
@@ -1996,6 +2025,33 @@ Transform:
   m_Father: {fileID: 1125147965}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &680107161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 680107157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609c380b3c87517458faf0f89f884d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponInfo:
+    amount: 1
+    maxAmount: 1
+    type: 3
+    name: 3
+    muzzleFlash: {fileID: 0}
+    bulletHole: {fileID: 0}
+    damage: 30
+    rpm: 700
+    range: 100
+    maximumMagazine: 30
+    currentMagazine: 30
+    maxRecoilRadius: 2
+    recoilIncreament: 0.2
+  fireReady: 0
+  isHaving: 0
 --- !u!1001 &714387116
 Prefab:
   m_ObjectHideFlags: 0
@@ -3062,6 +3118,7 @@ GameObject:
   - component: {fileID: 857214673}
   - component: {fileID: 857214675}
   - component: {fileID: 857214674}
+  - component: {fileID: 857214676}
   m_Layer: 0
   m_Name: Weapon_Shotgun
   m_TagString: Untagged
@@ -3127,6 +3184,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 857214672}
   m_Mesh: {fileID: 4300008, guid: 344a3d604644509489c062f11bbe78a5, type: 3}
+--- !u!114 &857214676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 857214672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609c380b3c87517458faf0f89f884d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponInfo:
+    amount: 1
+    maxAmount: 1
+    type: 3
+    name: 2
+    muzzleFlash: {fileID: 0}
+    bulletHole: {fileID: 0}
+    damage: 20
+    rpm: 60
+    range: 100
+    maximumMagazine: 8
+    currentMagazine: 8
+    maxRecoilRadius: 2
+    recoilIncreament: 0.2
+  fireReady: 0
+  isHaving: 0
 --- !u!1 &862812902
 GameObject:
   m_ObjectHideFlags: 0
